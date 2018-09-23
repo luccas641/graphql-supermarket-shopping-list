@@ -57,6 +57,7 @@ const loadProduct = function (args) {
   }
   query = querystring.stringify(query)
   try {
+    console.log('loading 1')
     return fetch(`https://www.savegnago.com.br/api/catalog_system/pub/products/search?${query}`)
   } catch (err) {
     console.log(err)
@@ -70,7 +71,12 @@ export const getLoader = () => new DataLoader((args: Array<Object>) => Promise.a
 export const load = async ({ user: viewer, dataloaders }, args) => {
   if (!args) return null;
   let data = await dataloaders.ProductLoader.load(args);
-  data = await data.json()
+  try {
+    data = await data.json()
+  } catch (err) {
+    data = null
+  }
+  
   if (!data) return null;
 
   return new Product(data[0])

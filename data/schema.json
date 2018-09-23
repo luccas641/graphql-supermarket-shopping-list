@@ -249,9 +249,13 @@
                   "name": "id",
                   "description": null,
                   "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
                   },
                   "defaultValue": null
                 }
@@ -1390,7 +1394,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "ShoppingListAddInput",
+                      "name": "ShoppingListNewInput",
                       "ofType": null
                     }
                   },
@@ -1399,7 +1403,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "ShoppingListAddPayload",
+                "name": "ShoppingListNewPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1839,7 +1843,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "ShoppingListAddInput",
+          "name": "ShoppingListNewInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1874,7 +1878,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ShoppingListAddPayload",
+          "name": "ShoppingListNewPayload",
           "description": null,
           "fields": [
             {
@@ -2155,6 +2159,30 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "ShoppingListAdded",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ShoppingListCreatedPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ShoppingListChanged",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ShoppingListChangedPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -2174,6 +2202,52 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "UserEdge",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ShoppingListCreatedPayload",
+          "description": null,
+          "fields": [
+            {
+              "name": "shoppingListEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ShoppingListEdge",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ShoppingListChangedPayload",
+          "description": null,
+          "fields": [
+            {
+              "name": "shoppingListEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ShoppingListEdge",
                 "ofType": null
               },
               "isDeprecated": false,

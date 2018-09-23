@@ -68,11 +68,11 @@ export default new GraphQLObjectType({
       type: ShoppingListType,
       args: {
         id: {
-          type: GraphQLInt,
+          type: new GraphQLNonNull(GraphQLString),
         }
       },
       resolve: (obj, args, context) => {
-        return ShoppingListLoader.load(context, args);
+        return ShoppingListLoader.load(context, args.id);
       },
     },
     shoppingLists: {

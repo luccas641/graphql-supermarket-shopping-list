@@ -3,7 +3,7 @@ type Mutation {
   UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
   UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
   ShoppingListRemove(input: ShoppingListRemoveInput!): ShoppingListRemovePayload
-  ShoppingListNew(input: ShoppingListAddInput!): ShoppingListAddPayload
+  ShoppingListNew(input: ShoppingListNewInput!): ShoppingListNewPayload
   ShoppingListAddItem(input: ShoppingListAddItemInput!): ShoppingListAddItemPayload
   ShoppingListEditItem(input: ShoppingListEditItemInput!): ShoppingListEditItemPayload
 }
@@ -100,7 +100,7 @@ type Query {
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   product(id: Int, ean: String): Product
   products(after: String, first: Int, before: String, last: Int, word: String): ProductConnection
-  shoppingList(id: Int): ShoppingList
+  shoppingList(id: String!): ShoppingList
   shoppingLists(after: String, first: Int, before: String, last: Int): ShoppingListConnection
 }
 
@@ -113,11 +113,6 @@ type ShoppingList implements Node {
   user: User
   items: [ShopppingItem]
   status: String
-}
-
-input ShoppingListAddInput {
-  name: String!
-  clientMutationId: String
 }
 
 input ShoppingListAddItemInput {
@@ -133,10 +128,8 @@ type ShoppingListAddItemPayload {
   clientMutationId: String
 }
 
-type ShoppingListAddPayload {
-  error: String
-  shoppingList: ShoppingList
-  clientMutationId: String
+type ShoppingListChangedPayload {
+  shoppingListEdge: ShoppingListEdge
 }
 
 """A connection to a list of items."""
@@ -165,6 +158,10 @@ type ShoppingListConnection {
   edges: [ShoppingListEdge]!
 }
 
+type ShoppingListCreatedPayload {
+  shoppingListEdge: ShoppingListEdge
+}
+
 """An edge in a connection."""
 type ShoppingListEdge {
   """The item at the end of the edge"""
@@ -182,6 +179,17 @@ input ShoppingListEditItemInput {
 }
 
 type ShoppingListEditItemPayload {
+  error: String
+  shoppingList: ShoppingList
+  clientMutationId: String
+}
+
+input ShoppingListNewInput {
+  name: String!
+  clientMutationId: String
+}
+
+type ShoppingListNewPayload {
   error: String
   shoppingList: ShoppingList
   clientMutationId: String
@@ -205,6 +213,8 @@ type ShopppingItem {
 
 type Subscription {
   UserAdded: UserAddedPayload
+  ShoppingListAdded: ShoppingListCreatedPayload
+  ShoppingListChanged: ShoppingListChangedPayload
 }
 
 """User data"""

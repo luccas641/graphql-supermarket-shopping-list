@@ -1,7 +1,9 @@
 // @flow
 
-import UserAdded from './UserAddedSubscription';
+import ShoppingListAdded from './ShoppingListAddedSubscription';
+import ShoppingListChanged from './ShoppingListChangedSubscription';
 
 export default {
-  UserAdded,
+  ShoppingListAdded,
+  ShoppingListChanged
 };

@@ -31,11 +31,10 @@ export const getLoader = () => new DataLoader(ids => mongooseLoader(ShoppingList
 
 const viewerCanSee = () => true;
 
-export const load = async (context: GraphQLContext, id: string): Promise<ShoppingList | null> => {
+export const load = async (context: GraphQLContext, id): Promise<ShoppingList | null> => {
   if (!id) {
     return null;
   }
-
   let data;
   try {
     data = await context.dataloaders.ShoppingListLoader.load(id);

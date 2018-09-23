@@ -11,7 +11,7 @@ import ShoppingList from '../ShoppingListModel'
 import * as ShoppingListLoader from '../ShoppingListLoader';
 
 export default mutationWithClientMutationId({
-  name: 'ShoppingListAdd',
+  name: 'ShoppingListNew',
   inputFields: {
     name: {
       type: new GraphQLNonNull(GraphQLString),
