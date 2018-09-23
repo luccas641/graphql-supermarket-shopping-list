@@ -1,11 +1,12 @@
 // @flow
 
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
 import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/user/UserType';
+import ProductType, { ProductConnection } from '../modules/product/ProductType';
 import { nodeField } from '../interface/NodeInterface';
-import { UserLoader } from '../loader';
+import { UserLoader, ProductLoader } from '../loader';
 
 export default new GraphQLObjectType({
   name: 'Query',
@@ -37,6 +38,30 @@ export default new GraphQLObjectType({
         },
       },
       resolve: (obj, args, context) => UserLoader.loadUsers(context, args),
+    },
+    product: {
+      type: ProductType,
+      args: {
+        id: {
+          type: GraphQLInt,
+        },
+        ean: {
+          type: GraphQLString,
+        }
+      },
+      resolve: (obj, args, context) => {
+        return ProductLoader.load(context, args);
+      },
+    },
+    products: {
+      type: ProductConnection.connectionType,
+      args: {
+        ...connectionArgs,
+        word: {
+          type: GraphQLString,
+        }
+      },
+      resolve: (obj, args, context) => ProductLoader.loadProducts(context, args),
     },
   }),
 });

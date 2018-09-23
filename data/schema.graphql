@@ -25,6 +25,65 @@ type PageInfoExtended {
   endCursor: String
 }
 
+"""Represents Product"""
+type Product implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """Real ID"""
+  _id: Int
+
+  """Product name"""
+  name: String
+
+  """Product brand"""
+  brand: String
+
+  """Product EAN"""
+  ean: String
+
+  """Price field"""
+  price: String
+
+  """ImageURL """
+  image: String
+}
+
+"""A connection to a list of items."""
+type ProductConnection {
+  """Number of items in this connection"""
+  count: Int!
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+    This allows a client to fetch the first five objects by passing "5" as the
+    argument to "first", then fetch the total count so it could display "5 of 83",
+    for example.
+  """
+  totalCount: Int!
+
+  """Offset from start"""
+  startCursorOffset: Int!
+
+  """Offset till end"""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfoExtended!
+
+  """A list of edges."""
+  edges: [ProductEdge]!
+}
+
+"""An edge in a connection."""
+type ProductEdge {
+  """The item at the end of the edge"""
+  node: Product!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 """The root of all... queries"""
 type Query {
   """Fetches an object given its ID"""
@@ -35,6 +94,8 @@ type Query {
   me: User
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
+  product(id: Int, ean: String): Product
+  products(after: String, first: Int, before: String, last: Int, word: String): ProductConnection
 }
 
 type Subscription {

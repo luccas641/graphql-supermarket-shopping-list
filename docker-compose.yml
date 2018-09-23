@@ -14,7 +14,8 @@ services:
         volumes:
             - "./src:/app/src"
             - "./dist:/app/dist"
-        entrypoint: "npm run watch"
+            - "./data:/app/data"
+        entrypoint: "npm run start"
 
     mongo:
         image: mongo
