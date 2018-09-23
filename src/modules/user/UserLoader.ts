@@ -59,7 +59,7 @@ type UserArgs = ConnectionArguments & {
 export const loadUsers = async (context: GraphQLContext, args: UserArgs) => {
   const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
   const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
-  console.log(args)
+
   return connectionFromMongoCursor({
     cursor: users,
     context,

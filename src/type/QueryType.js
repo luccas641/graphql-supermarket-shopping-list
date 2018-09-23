@@ -5,8 +5,9 @@ import { connectionArgs, fromGlobalId } from 'graphql-relay';
 
 import UserType, { UserConnection } from '../modules/user/UserType';
 import ProductType, { ProductConnection } from '../modules/product/ProductType';
+import ShoppingListType, { ShoppingListConnection } from '../modules/shoppinglist/ShoppingListType';
 import { nodeField } from '../interface/NodeInterface';
-import { UserLoader, ProductLoader } from '../loader';
+import { UserLoader, ProductLoader, ShoppingListLoader } from '../loader';
 
 export default new GraphQLObjectType({
   name: 'Query',
@@ -62,6 +63,25 @@ export default new GraphQLObjectType({
         }
       },
       resolve: (obj, args, context) => ProductLoader.loadProducts(context, args),
+    },
+    
+    shoppingList: {
+      type: ShoppingListType,
+      args: {
+        id: {
+          type: GraphQLInt,
+        }
+      },
+      resolve: (obj, args, context) => {
+        return ShoppingListLoader.load(context, args);
+      },
+    },
+    shoppingLists: {
+      type: ShoppingListConnection.connectionType,
+      args: {
+        ...connectionArgs,
+      },
+      resolve: (obj, args, context) => ShoppingListLoader.loadShoppingLists(context, args),
     },
   }),
 });
