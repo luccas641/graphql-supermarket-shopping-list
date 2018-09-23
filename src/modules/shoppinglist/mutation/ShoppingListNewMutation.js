@@ -2,43 +2,36 @@
 
 import { GraphQLString, GraphQLNonNull } from 'graphql';
 import { mutationWithClientMutationId } from 'graphql-relay';
+import pubSub, { EVENTS } from '../../../pubSub';
 
 import type { GraphQLContext } from '../../../TypeDefinition';
 
 import ShoppingListType from '../ShoppingListType';
+import ShoppingList from '../ShoppingListModel'
 import * as ShoppingListLoader from '../ShoppingListLoader';
 
 export default mutationWithClientMutationId({
-  name: 'ShoppingListChangePassword',
+  name: 'ShoppingListAdd',
   inputFields: {
-    oldPassword: {
+    name: {
       type: new GraphQLNonNull(GraphQLString),
-    },
-    password: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'shoppingList new password',
-    },
+    }
   },
-  mutateAndGetPayload: async ({ oldPassword, password }, { shoppingList }: GraphQLContext) => {
-    if (!shoppingList) {
+  mutateAndGetPayload: async ({ name }, context: GraphQLContext) => {
+    if (!context.user) {
       return {
-        error: 'ShoppingList not authenticated',
+        error: 'User not authenticated',
       };
     }
-
-    const correctPassword = shoppingList.authenticate(oldPassword);
-
-    if (!correctPassword) {
-      return {
-        error: 'INVALID_PASSWORD',
-      };
-    }
-
-    shoppingList.password = password;
+    let shoppingList = new ShoppingList();
+    shoppingList.name = name;
+    shoppingList.user = context.user;
     await shoppingList.save();
+    await pubSub.publish(EVENTS.SHOPPING_LIST.CREATED, { ShoppingListCreated: { shoppingList } });
 
     return {
       error: null,
+      shoppingList
     };
   },
   outputFields: {
@@ -46,9 +39,9 @@ export default mutationWithClientMutationId({
       type: GraphQLString,
       resolve: ({ error }) => error,
     },
-    me: {
+    shoppingList: {
       type: ShoppingListType,
-      resolve: (obj, args, context) => ShoppingListLoader.load(context, context.shoppingList.id),
+      resolve: (obj, args, context) => obj.error ? null : ShoppingListLoader.load(context, obj.shoppingList.id),
     },
   },
 });

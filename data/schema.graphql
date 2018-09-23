@@ -2,6 +2,10 @@ type Mutation {
   UserChangePassword(input: UserChangePasswordInput!): UserChangePasswordPayload
   UserLoginWithEmail(input: UserLoginWithEmailInput!): UserLoginWithEmailPayload
   UserRegisterWithEmail(input: UserRegisterWithEmailInput!): UserRegisterWithEmailPayload
+  ShoppingListRemove(input: ShoppingListRemoveInput!): ShoppingListRemovePayload
+  ShoppingListNew(input: ShoppingListAddInput!): ShoppingListAddPayload
+  ShoppingListAddItem(input: ShoppingListAddItemInput!): ShoppingListAddItemPayload
+  ShoppingListEditItem(input: ShoppingListEditItemInput!): ShoppingListEditItemPayload
 }
 
 """An object with an ID"""
@@ -96,6 +100,107 @@ type Query {
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
   product(id: Int, ean: String): Product
   products(after: String, first: Int, before: String, last: Int, word: String): ProductConnection
+  shoppingList(id: Int): ShoppingList
+  shoppingLists(after: String, first: Int, before: String, last: Int): ShoppingListConnection
+}
+
+"""ShoppingList data"""
+type ShoppingList implements Node {
+  """The ID of an object"""
+  id: ID!
+  _id: String
+  name: String
+  user: User
+  items: [ShopppingItem]
+  status: String
+}
+
+input ShoppingListAddInput {
+  name: String!
+  clientMutationId: String
+}
+
+input ShoppingListAddItemInput {
+  _id: String!
+  productId: Int!
+  quantity: Int!
+  clientMutationId: String
+}
+
+type ShoppingListAddItemPayload {
+  error: String
+  shoppingList: ShoppingList
+  clientMutationId: String
+}
+
+type ShoppingListAddPayload {
+  error: String
+  shoppingList: ShoppingList
+  clientMutationId: String
+}
+
+"""A connection to a list of items."""
+type ShoppingListConnection {
+  """Number of items in this connection"""
+  count: Int!
+
+  """
+  A count of the total number of objects in this connection, ignoring pagination.
+    This allows a client to fetch the first five objects by passing "5" as the
+    argument to "first", then fetch the total count so it could display "5 of 83",
+    for example.
+  """
+  totalCount: Int!
+
+  """Offset from start"""
+  startCursorOffset: Int!
+
+  """Offset till end"""
+  endCursorOffset: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfoExtended!
+
+  """A list of edges."""
+  edges: [ShoppingListEdge]!
+}
+
+"""An edge in a connection."""
+type ShoppingListEdge {
+  """The item at the end of the edge"""
+  node: ShoppingList!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+input ShoppingListEditItemInput {
+  _id: String!
+  productId: Int!
+  quantity: Int!
+  clientMutationId: String
+}
+
+type ShoppingListEditItemPayload {
+  error: String
+  shoppingList: ShoppingList
+  clientMutationId: String
+}
+
+input ShoppingListRemoveInput {
+  _id: String!
+  clientMutationId: String
+}
+
+type ShoppingListRemovePayload {
+  error: String
+  clientMutationId: String
+}
+
+"""ShopppingItem"""
+type ShopppingItem {
+  product: Product
+  quantity: Int
 }
 
 type Subscription {
@@ -110,6 +215,7 @@ type User implements Node {
   name: String
   email: String
   active: Boolean
+  shoppingLists: ShoppingListConnection
 }
 
 type UserAddedPayload {

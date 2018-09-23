@@ -1,10 +1,12 @@
 // @flow
-import UserChangePassword from './UserChangePasswordMutation';
-import UserLoginWithEmail from './UserLoginWithEmailMutation';
-import UserRegisterWithEmail from './UserRegisterWithEmailMutation';
+import ShoppingListRemove from './ShoppingListRemoveMutation';
+import ShoppingListNew from './ShoppingListNewMutation';
+import ShoppingListAddItem from './ShoppingListAddItemMutation';
+import ShoppingListEditItem from './ShoppingListEditItemMutation';
 
 export default {
-  UserChangePassword,
-  UserLoginWithEmail,
-  UserRegisterWithEmail,
+  ShoppingListRemove,
+  ShoppingListNew,
+  ShoppingListAddItem,
+  ShoppingListEditItem,
 };

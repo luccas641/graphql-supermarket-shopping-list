@@ -5,26 +5,7 @@ import { connectionDefinitions } from '../../core/connection/CustomConnectionTyp
 import { registerType, nodeInterface } from '../../interface/NodeInterface';
 
 import UserType from '../user/UserType'
-import ProductType from '../product/ProductType'
-import {load} from '../product/ProductLoader'
-
-const ShoppingItemType = new GraphQLObjectType({
-  name: 'ShopppingItem',
-  description: 'ShopppingItem',
-  fields: () => ({
-    product: {
-      type: ProductType,
-      resolve: async (item, args, context) => {
-        let product = await load(context, {id: item.productId})
-        console.log(product);
-        return product
-      }
-    },
-    quantity: {
-      type: GraphQLInt
-    }
-  })
-}) 
+import ShoppingItemType from '../shoppingitem/ShoppingItemType'
 
 const ShoppingListType = registerType(
   new GraphQLObjectType({

@@ -4,8 +4,8 @@ import { offsetToCursor } from 'graphql-relay';
 import { ShoppingListConnection } from '../ShoppingListType';
 import pubSub, { EVENTS } from '../../../pubSub';
 
-const ShoppingListCreatedPayloadType = new GraphQLObjectType({
-  name: 'ShoppingListCreatedPayload',
+const ShoppingListChangedPayloadType = new GraphQLObjectType({
+  name: 'ShoppingListChangedPayload',
   fields: () => ({
     shoppingListEdge: {
       type: ShoppingListConnection.edgeType,
@@ -17,9 +17,9 @@ const ShoppingListCreatedPayloadType = new GraphQLObjectType({
   }),
 });
 
-const shoppingListCreatedSubscription = {
-  type: ShoppingListCreatedPayloadType,
-  subscribe: () => pubSub.asyncIterator(EVENTS.SHOPPINGLIST.CREATED),
+const shoppingListChangedSubscription = {
+  type: ShoppingListChangedPayloadType,
+  subscribe: () => pubSub.asyncIterator(EVENTS.SHOPPINGLIST.CHANGED),
 };
 
-export default shoppingListCreatedSubscription;
+export default shoppingListChangedSubscription;

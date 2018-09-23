@@ -64,7 +64,6 @@ export default new GraphQLObjectType({
       },
       resolve: (obj, args, context) => ProductLoader.loadProducts(context, args),
     },
-    
     shoppingList: {
       type: ShoppingListType,
       args: {
