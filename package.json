@@ -1,6 +1,6 @@
 {
-  "name": "graphql-dataloader-boilerplate",
-  "description": "GraphQL DataLoader boilerplate",
+  "name": "graphql-supermarket-shoppinglist",
+  "description": "GraphQL Supermarket ShoppingList",
   "version": "0.0.1",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -104,7 +104,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/entria/graphql-dataloader-boilerplate"
+    "url": "https://github.com/luccas641/graphql-supermarket-shopping-list"
   },
   "scripts": {
     "build": "npm run clear && babel src --extensions \".es6,.js,.es,.jsx,.mjs,.ts\" --ignore *.spec.js --out-dir dist --copy-files",
