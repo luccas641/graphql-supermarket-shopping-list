@@ -151,10 +151,10 @@ export type ConnectionOptionsCursor<LoaderResult, Ctx> = {
 
 async function connectionFromVtex<LoaderResult, Ctx>({
   context,
+  loader,
   args = {},
 }: ConnectionOptionsCursor<LoaderResult, Ctx>) {
-  let data = await context.dataloaders.ProductLoader.load(args);
-  const totalCount: number = parseInt(data.headers.get('resources').split('/')[1])
+  const totalCount: number = 12383
   
   const {
     first,
@@ -171,7 +171,7 @@ async function connectionFromVtex<LoaderResult, Ctx>({
     endCursorOffset,
   } = calculateOffsets({ args, totalCount });
 
-  data = await context.dataloaders.ProductLoader.load({
+  let data = await context.dataloaders.ProductLoader.load({
     ...args,
     _from: startOffset,
     _to: endOffset-1

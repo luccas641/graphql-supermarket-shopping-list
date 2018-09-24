@@ -1,15 +1,19 @@
-# GraphQL DataLoader Boilerplate
+# GraphQL DataLoader Supermarket Shoppinglist API
 
-[![CircleCI](https://circleci.com/gh/entria/graphql-dataloader-boilerplate.svg?style=svg)](https://circleci.com/gh/entria/graphql-dataloader-boilerplate)
-[![codecov](https://codecov.io/gh/entria/graphql-dataloader-boilerplate/branch/master/graph/badge.svg)](https://codecov.io/gh/entria/graphql-dataloader-boilerplate)
+Based on Entria Boilerplate https://github.com/entria/graphql-dataloader-boilerplate
 
-Boilerplate using GraphQL and DataLoader
+It serves as a backend for https://github.com/luccas641/react-native-relay-shopping-list
 
-## Blog Posts
-* [How to implement viewerCanSee in  GraphQL](https://medium.com/@sibelius/how-to-implement-viewercansee-in-graphql-78cc48de7464#.d9vpk6fvx)
-* [Testing a GraphQL Server using Jest](https://medium.com/@sibelius/testing-a-graphql-server-using-jest-4e00d0e4980e)
-* [Parallel testing a GraphQL Server with Jest](https://itnext.io/parallel-testing-a-graphql-server-with-jest-44e206f3e7d2)
-* [Encapsulating data on GraphQL using Loaders](https://medium.com/@jonathancardoso/encapsulating-data-on-graphql-using-loaders-9387b805c4fc)
+## What this API do
+Fetch Products and EAN Codes from Savegnago Supermarket. 
+
+It is possible to create user accounts with shopping lists of products.
+
+### TODO
+
+Mirror Savegnago Products locally (Savegnago API has a limit of too many requests and sometimes return 429)
+Standardize project in Typescript or Flow
+Tests
 
 ### Directory Structure
 
@@ -21,17 +25,23 @@ Boilerplate using GraphQL and DataLoader
 │   ├── /core/               # Core types and helper files, can be used like a global module
 │   ├── /interface/          # NodeInterface (Relay) and other GraphQL Interfaces
 │   ├── /modules/            # Modules (think on modules like isolated pieces of your code)
-│   ├── /modules/            # Modules (think on modules like isolated pieces of your code)
 │   │   │── /mutation/       # Module mutations (add an index file to be used on MutationType)
 │   │   │── /subscription/   # Module subscriptions (add an index file to be used on SubscriptionType)
 │   │   │── /enum/           # Enums related to this module
 ├── /test/                   # Test helpers
 ```
 
-## Create-GraphQL
-If you want to move faster you should use [create-graphql](https://github.com/lucasbento/create-graphql) to simplify the creation of a GraphQL Server
+#### Docker and docker-compose RECOMMENDED
+No needs for installing dependencies or running `mongod` in another terminal window
 
-## Command
+```bash
+docker-compose build && docker-compose up
+```
+
+Test
+```bash
+docker-compose -f docker-compose.test.yml build && docker-compose -f docker-compose.test.yml up
+```
 
 #### Setup
 ```bash
@@ -54,18 +64,6 @@ npm test
 Or
 ```bash
 npm run test:watch
-```
-
-#### Docker and docker-compose
-No needs for installing dependencies or running `mongod` in another terminal window
-
-```bash
-docker-compose build && docker-compose up
-```
-
-Test
-```bash
-docker-compose -f docker-compose.test.yml build && docker-compose -f docker-compose.test.yml up
 ```
 
 #### Production
